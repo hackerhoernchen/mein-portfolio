@@ -5,6 +5,8 @@ import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
+import { Home } from './globals/Home'
+import { Projects } from './collections/Projects'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
@@ -18,7 +20,12 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  // Hier registrieren wir die Sammlungen:
+  collections: [Users, Media, Projects],
+  
+// Hier registrieren wir die Globals (Startseite):
+  globals: [Home],
+
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -26,6 +33,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
+      // Er sucht jetzt sicher nach beiden Varianten 
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
